@@ -1,69 +1,55 @@
-# PrivateDock
+# Bismarck
 
-**PrivateDock** is a high-performance private server emulator for the mobile game [Azur Lane](https://en.wikipedia.org/wiki/Azur_Lane), written in Python 3.12+ with `asyncio`. It targets official EN Android clients and allows playing with a stock, unmodified game client.
+**Bismarck** is a lightweight, asynchronous private server emulator for [Azur Lane](https://en.wikipedia.org/wiki/Azur_Lane), built with Python 3.12+ and `asyncio`. Designed specifically for the official EN Android release, it allows players to connect using a completely unmodified, stock game client. 
 
----
-
-## Features
-
-PrivateDock implements most of the core game systems.
-
-Supported features:
-- Secretary, Juustagram
-- Dock, Fleets (incl. submarines), Equipment, Meowfficers
-- Ship Building (with custom max orders), Requisition, Retirement
-- Shops, Missions, Handbook, Tactical Classes, Dorm, Fleet Technology, Research Academy, Shipyard
-- Main Campaign, War Archives, Daily Raids, Exercises
-
-For a per-system breakdown of what works, what is only partly covered, and what is not implemented yet, see the **[Implementation Status](docs/STATUS.md)** page.
+This repository is a fork of [PrivateDock](https://github.com/Forlorn01/PrivateDock), which itself evolved from [Belfast](https://github.com/ggmolly/belfast).
 
 ---
 
-## Quick Start
+## AI & Development Disclaimer
 
-For full installation and configuration instructions, see the **[Installation Guide](docs/INSTALL.md)**.
+Like PrivateDock before it, Bismarck's codebase incorporates AI assistance (ChatGPT) during development. While software engineering isn't my primary background, I actively test features, resolve issues, and strive to keep the emulator as stable as possible. 
 
-1. **Prerequisites**: Python 3.12+, Azur Lane EN client, and [AzurLaneLuaScripts](https://github.com/AzurLaneTools/AzurLaneLuaScripts).
-2. **Clone & Install Dependencies**:
+Unforeseen bugs or edge cases may still pop up during gameplay—if you encounter any errors or unexpected behavior, please feel free to open an issue or share feedback!
+
+---
+
+## Feature Overview
+
+Bismarck provides functional support for a wide range of Azur Lane's primary gameplay mechanics.
+
+### Included Systems
+* **Base & Interface**: Secretary configurations and Juustagram.
+* **Fleet Management**: Dockyard, fleet setups (including submarine units), gear/equipment, and Meowfficers.
+* **Ship Acquisition**: Construction (featuring custom maximum order caps and customizable build pools, allowing you to pull for ships outside the live server rotation—such as collab events or Priority Research ships), Requisition, and Retirement.
+* **Progression & Facilities**: Shops, Missions, Handbook, Tactical Classes, Dormitory, Fleet Tech, Research Academy, and Shipyard.
+* **Combat & Game Modes**: Main Story Campaign, War Archives, Daily Raids, and Exercises.
+
+> For a complete feature list, partial implementation details, and upcoming goals, review the **[Implementation Status](docs/STATUS.md)** guide.
+
+---
+
+## Quick Start Guide
+
+> **Note**: Step-by-step setup details and prerequisites are available in the **[Installation Documentation](docs/INSTALL.md)**.
+
+1. **Prerequisites**
+   * Python 3.12+ installed on your system.
+   * An official Azur Lane EN client.
+   * The [AzurLaneLuaScripts](https://github.com/AzurLaneTools/AzurLaneLuaScripts) repository.
+
+2. **Clone Repositories & Set Up Environment**
    ```bash
-   git clone https://github.com/AzurLaneTools/AzurLaneLuaScripts.git
-   git clone https://github.com/Forlorn01/PrivateDock.git
-   cd PrivateDock
+   git clone [https://github.com/AzurLaneTools/AzurLaneLuaScripts.git](https://github.com/AzurLaneTools/AzurLaneLuaScripts.git)
+   git clone [https://github.com/YOUR_USERNAME/Bismarck.git](https://github.com/YOUR_USERNAME/Bismarck.git)
+   cd Bismarck
+
    python -m venv .venv
-   # Windows:
+
+   # Activate virtual environment
+   # On Windows (PowerShell):
    .venv\Scripts\Activate.ps1
-   # Linux / macOS:
+   # On Linux / macOS:
    source .venv/bin/activate
 
    pip install -r requirements.txt
-   ```
-3. **Convert Game Data**:
-   ```bash
-   python scripts/convert_lua_to_json.py
-   ```
-4. **Configure Server**:
-   Edit `configurations/server.json` and set `servers[0].ip` to your machine's LAN IP address.
-5. **Run**:
-   ```bash
-   # Windows (Run PowerShell as Administrator to bind port 80):
-   python -m src
-   ```
-
----
-
-## Architecture Highlights
-
-- **Asynchronous Event Loop**: Built on Python `asyncio` for high concurrency and low latency.
-- **Dynamic Protobuf Engine**: Dynamic generation of 1,700+ protobuf message types from binary descriptors without requiring compiled `.py` proto stubs.
-- **Dual Database Backends**:
-  - **SQLite** (default): Zero-configuration file-based database (`db/privatedock.db`), ideal for local or single-player setups.
-  - **PostgreSQL**: Production-grade engine with asynchronous connection pooling via `asyncpg`.
-  - Built-in SQL dialect translation layer and automated migrations.
-- **Stock Client Compatibility**: Works with the unmodified EN client via DNS/hosts redirection.
-
----
-
-## Thanks & Credits
-
-- [AzurLaneTools](https://github.com/AzurLaneTools) for providing the unpacked client Lua scripts in [AzurLaneLuaScripts](https://github.com/AzurLaneTools/AzurLaneLuaScripts).
-- [Molly](https://github.com/ggmolly) for [Belfast](https://github.com/ggmolly/belfast), which served as the original Go server foundation.
